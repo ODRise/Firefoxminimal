@@ -1,0 +1,261 @@
+/*
+ * This CSS file customizes the appearance of Firefox.
+ * It includes rules for:
+ * - Making tabs square and active/inactive tabs the same color.
+ * - Making various toolbars and the sidebar transparent.
+ * - Hiding specific UI elements like window controls, urlbar icons, and back/forward buttons.
+ * - Customizing tab appearance (icon centering, close button opacity).
+ * - Styling the tab speaker icon.
+ * - Setting custom fonts for the urlbar and app menu.
+ *
+ * To use this:
+ * 1. Open about:config in Firefox.
+ * 2. Search for toolkit.legacyUserProfileCustomizations.stylesheets and set it to true.
+ * 3. Open your Firefox profile folder (about:profiles will show you the path).
+ * 4. Create a folder named 'chrome' inside your profile folder if it doesn't exist.
+ * 5. Create a file named userChrome.css inside the 'chrome' folder.
+ * 6. Paste the code below into userChrome.css.
+ * 7. Restart Firefox.
+ */
+
+/* === Variables === */
+:root {
+    --tab-min-height: 25px !important;
+    --firefoxcss-tab-speaker-icon-color: hsl(0, 0%, 100%);
+    --firefoxcss-tab-speaker-hover-bg-color: hsla(0, 0%, 80%);
+    --firefoxcss-tab-speaker-icon-hover-color: hsl(0, 0%, 10%);
+}
+
+/* === General Tab Styling === */
+/* Remove border-radius from tabs to make them square */
+#tabbrowser-tabs .tabbrowser-tab {
+    border-radius: 0 !important;
+    margin-bottom: 0 !important; /* Adjust margin if needed */
+    margin-top: 0 !important; /* Adjust margin if needed */
+}
+
+/* Remove extra space below tabs */
+#TabsToolbar {
+    margin-bottom: 0 !important;
+}
+
+/* Style the tab background for both active and inactive tabs to be transparent */
+/* This makes active and non-active tabs have the same background color */
+.tab-background {
+    background-color: transparent !important;
+    color: var(--foreground) !important; /* Assuming --foreground is defined elsewhere or inherited */
+    font-family: 'JetBrains Mono', monospace !important;
+    box-shadow: none !important;
+}
+
+/* Ensure the background extends to the corners (redundant with border-radius: 0 but can be left for clarity) */
+#tabbrowser-tabs .tabbrowser-tab .tab-background {
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* === Toolbar and Window Styling === */
+/* Hide MIN MAX CLOSE buttons */
+#TabsToolbar > .titlebar-buttonbox-container {
+    visibility: collapse !important;
+}
+
+/* Make sidebar transparent */
+#sidebar-main, #sidebar-box {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Make navigator toolbox transparent and remove border */
+#navigator-toolbox {
+    background-color: transparent !important;
+    border-bottom: none !important;
+}
+
+/* Make main window transparent */
+#main-window {
+    background-color: transparent !important;
+}
+
+/* Make personal toolbar transparent */
+#PersonalToolbar {
+    background-color: transparent !important;
+}
+
+/* Make nav bar transparent and remove top border */
+#nav-bar {
+    border-top: none !important;
+    background-color: transparent !important;
+}
+
+/* Hide titlebar spacer */
+.titlebar-spacer {
+    display: none !important;
+}
+
+/* === Icon and Button Hiding === */
+/* Remove icons from urlbar */
+#star-button-box,
+#alltabs-button,
+#picture-in-picture-button,
+#reader-mode-button,
+#translations-button {
+    display: none !important;
+}
+
+/* Remove forward/back buttons */
+#back-button,
+#forward-button {
+    display: none !important;
+}
+
+/* === Font Styling === */
+/* default menu font for urlbar */
+#urlbar-input, .urlbarView-url{
+    font-family: "Bitstream Vera Sans Mono", "Andale Mono", FreeMono, Kode Mono !important;
+}
+
+/* Font for app menu */
+#appMenu-popup {
+    font-family: "Bitstream Vera Sans Mono", "Andale Mono", FreeMono, Kode Mono !important;
+}
+
+/* === Tab Content Alignment === */
+/* Center tab icon */
+.tab-icon-stack {
+    margin-inline-start: auto;
+}
+
+/* Center tab label */
+.tab-label-container {
+    max-width: min-content;
+    margin-inline-end: auto;
+}
+
+/* === Extension Button Styling === */
+#unified-extensions-button {
+    width: 2px !important;
+    padding-inline: 0 !important;
+}
+
+#unified-extensions-button > .toolbarbutton-icon {
+    width: 0 !important;
+}
+
+/* === Tab Close Button Styling === */
+/* X-button on the tabs (not hovered) */
+.tabbrowser-tab:not(:hover) .tab-close-button {
+    opacity: 0% !important;
+    transition: opacity 0.3s !important; /* Specify property for transition */
+    display: -moz-box !important; /* Firefox specific display */
+}
+
+/* X-button on selected tabs (not hovered) */
+.tab-close-button[selected]:not(:hover) {
+    opacity: 45% !important;
+    transition: opacity 0.3s !important; /* Specify property for transition */
+    display: -moz-box !important; /* Firefox specific display */
+}
+
+/* X-button on hovered tabs */
+.tabbrowser-tab:hover .tab-close-button {
+    opacity: 50% !important;
+    transition: opacity 0.3s !important; /* Specify property for transition */
+    background: none !important;
+    cursor: pointer;
+    display: -moz-box !important; /* Firefox specific display */
+}
+
+/* X-button on hovered close button itself */
+.tab-close-button:hover {
+    opacity: 100% !important;
+    transition: opacity 0.3s !important; /* Specify property for transition */
+    background: none !important;
+    cursor: pointer;
+    display: -moz-box !important; /* Firefox specific display */
+}
+
+/* X-button on hovered selected close button */
+.tab-close-button[selected]:hover {
+    opacity: 100% !important;
+    transition: opacity 0.3s !important; /* Specify property for transition */
+    background: none !important;
+    cursor: pointer;
+    display: -moz-box !important; /* Firefox specific display */
+}
+
+/* === Urlbar Styling === */
+/* Search box transparency */
+#urlbar {
+    --toolbar-field-background-color: color-mix(in srgb, currentColor 18%, transparent) !important;
+}
+
+/* === Content Area Styling === */
+/* Remove the white line around the content window */
+@media (-moz-bool-pref: "sidebar.revamp") {
+    #tabbrowser-tabbox {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* === Tab Speaker Icon Styling === */
+/* Speaker on tabs color fixes (non-vertical, non-pinned) */
+#tabbrowser-tabs:not([orient="vertical"]) .tabbrowser-tab:not([pinned]) .tab-icon-overlay:not([crashed]) {
+    &:is([soundplaying], [muted], [activemedia-blocked]) {
+        fill: var(--firefoxcss-tab-speaker-icon-color) !important;
+        background-color: transparent !important;
+        border: none !important;
+        transform: scale(1.4);
+        transition: transform 200ms ease-in-out, fill 100ms ease-in-out, background-color 100ms ease-in-out !important;
+        filter: drop-shadow(-1px 1px 1px light-dark(#0000002e, #00000052));
+        &:hover {
+            background-color: var(--firefoxcss-tab-speaker-hover-bg-color) !important;
+            fill: var(--firefoxcss-tab-speaker-icon-hover-color) !important;
+            border: none !important;
+            transform: scale(1.1);
+            transition: transform 200ms ease-in-out, fill 100ms ease-in-out, background-color 100ms ease-in-out, filter 100ms ease-in-out !important;
+        }
+    }
+}
+
+/* Speaker on tabs color fixes (non-vertical, pinned) */
+#tabbrowser-tabs:not([orient="vertical"]) .tabbrowser-tab[pinned] .tab-icon-overlay:not([crashed]) {
+    &:is([soundplaying], [muted], [activemedia-blocked]) {
+        background-color: #0000002e !important;
+        backdrop-filter: blur(6px);
+        fill: var(--firefoxcss-tab-speaker-icon-color) !important;
+        border: 1px solid #ffffff29 !important;
+        transition: transform 100ms ease-in-out, fill 100ms ease-in-out, background-color 100ms ease-in-out;
+
+        &:hover {
+            fill: var(--firefoxcss-tab-speaker-icon-color) !important;
+            background-color: transparent !important;
+            border: 1px solid #ffffff29 !important;
+            transition: transform 100ms ease-in-out, fill 100ms ease-in-out, background-color 100ms ease-in-out !important;
+            transform: scale(1.3) translate(-8%, 14%);
+            transform-origin: center !important;
+        }
+    }
+}
+
+/* Speaker on tabs color fixes (vertical) */
+#tabbrowser-tabs[orient="vertical"] .tabbrowser-tab .tab-icon-overlay:not([crashed]) {
+    &:is([soundplaying], [muted], [activemedia-blocked]) {
+        background-color: #0000002e !important;
+        backdrop-filter: blur(6px);
+        fill: var(--firefoxcss-tab-speaker-icon-color) !important;
+        border: 1px solid #ffffff29 !important;
+        transition: transform 100ms ease-in-out, fill 100ms ease-in-out, background-color 100ms ease-in-out;
+
+        &:hover {
+            fill: var(--firefoxcss-tab-speaker-icon-color) !important;
+            background-color: transparent !important;
+            border: 1px solid #ffffff29 !important;
+            transition: transform 100ms ease-in-out, fill 100ms ease-in-out, background-color 100ms ease-in-out !important;
+            transform: scale(1.3) translate(-8%, 14%);
+            transform-origin: center !important;
+        }
+    }
+}
